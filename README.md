@@ -107,6 +107,7 @@ python inference/generate.py \
 pip install -r requirements_mac.txt
 
 # Single prompt — downloads ~16 GB on first run
+# Model alias "flux2-klein-4b" = FLUX.2-klein-4B (distilled, 4-step, default)
 python inference/generate_mac.py \
   --prompt "cmcstyle, a detective in a rainy alley at night"
 

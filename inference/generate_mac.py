@@ -43,8 +43,12 @@ import time
 from pathlib import Path
 
 
-# Default model — 4B distilled is the only safe choice on 8 GB
-DEFAULT_MODEL = "black-forest-labs/FLUX.2-klein-distilled-4B"
+# mflux aliases for FLUX.2 klein (use alias, not HuggingFace path):
+#   "flux2-klein-4b"      → FLUX.2-klein-4B      (distilled, 4-step) ← default for 8 GB
+#   "flux2-klein-9b"      → FLUX.2-klein-9B      (distilled, 4-step, NOT safe on 8 GB)
+#   "flux2-klein-base-4b" → FLUX.2-klein-base-4B (undistilled, 20-50 steps)
+#   "flux2-klein-base-9b" → FLUX.2-klein-base-9B (undistilled, NOT safe on 8 GB)
+DEFAULT_MODEL = "flux2-klein-4b"
 
 
 def build_mflux_command(
@@ -124,7 +128,7 @@ def main():
     parser.add_argument(
         "--model",
         default=DEFAULT_MODEL,
-        help="HuggingFace model ID (default: FLUX.2-klein-distilled-4B)",
+        help="mflux model alias (default: flux2-klein-4b). See top of file for valid aliases.",
     )
     parser.add_argument("--lora", default=None, help="Path to .safetensors LoRA file")
     parser.add_argument("--lora_scale", type=float, default=1.0, help="LoRA weight scale (default: 1.0)")
