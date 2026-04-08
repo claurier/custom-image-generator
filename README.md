@@ -30,11 +30,13 @@ custom-image-generator/
 │   └── outputs/          # Checkpoints saved here (git-ignored)
 │
 ├── inference/
-│   ├── generate.py       # Run inference with your trained LoRA
+│   ├── generate.py       # RTX 4090 inference (CUDA / diffusers)
+│   ├── generate_mac.py   # Apple Silicon inference (mflux, 8 GB safe)
 │   └── test_prompts.txt  # Sample prompts for evaluation
 │
 ├── loras/                # Final .safetensors LoRA weights (git-ignored)
-├── requirements.txt
+├── requirements.txt      # RTX 4090 / CUDA dependencies
+├── requirements_mac.txt  # Apple Silicon (mflux) dependencies
 └── .gitignore
 ```
 
@@ -83,6 +85,8 @@ python train.py --config_path /path/to/training/configs/simpleTuner/config.json
 ```
 
 ### 6. Run inference
+
+**On RTX 4090 (Linux / Windows):**
 ```bash
 # Single prompt
 python inference/generate.py \
@@ -97,6 +101,32 @@ python inference/generate.py \
   --output_dir inference/samples/
 ```
 
+**On Apple Silicon Mac (M1/M2/M3/M4):**
+```bash
+# Install Mac-specific deps (do NOT use requirements.txt on Mac)
+pip install -r requirements_mac.txt
+
+# Single prompt — downloads ~16 GB on first run
+python inference/generate_mac.py \
+  --prompt "cmcstyle, a detective in a rainy alley at night"
+
+# With a trained LoRA
+python inference/generate_mac.py \
+  --lora loras/cmcstyle-v1.safetensors \
+  --prompt "cmcstyle, a superhero leaping across rooftops"
+
+# Batch
+python inference/generate_mac.py \
+  --prompts inference/test_prompts.txt \
+  --output_dir inference/samples/
+```
+
+> **8 GB Mac:** Default settings (Q4, 512×512, 4 steps) are tuned for 8 GB unified memory (~4 GB peak).
+> Try `--width 768 --height 768` only if no other apps are running.
+> If you still OOM, use [iris.c](https://github.com/antirez/iris.c) as a fallback (~4–5 GB peak via memory-mapped weights).
+>
+> **16 GB Mac:** Use `--quantize 8 --width 1024 --height 1024` for full quality.
+
 ---
 
 ## Key Parameters
@@ -109,7 +139,11 @@ python inference/generate.py \
 | Training steps | 3000–5000 | Sample every 250 steps to monitor |
 | Quantization | int8 | Required to fit 9B on 24GB |
 | Inference (quality) | 20–50 steps | ~8–15s per image on RTX 4090 |
-| Inference (speed) | 4 steps (distilled) | <1s per image |
+| Inference (speed) | 4 steps (distilled) | <1s per image on RTX 4090 |
+| Mac inference model | FLUX.2-klein-distilled-4B | Only 4B distilled is safe on 8 GB |
+| Mac quantization | Q4 | ~4 GB peak; use Q8 on 16 GB |
+| Mac resolution | 512×512 default | Try 768px if RAM allows |
+| Mac inference speed | 4 steps | ~30–90s per image on M3 Air 8 GB |
 
 ---
 

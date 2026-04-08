@@ -1,0 +1,14 @@
+# Mac / Apple Silicon inference only
+# Install with: pip install -r requirements_mac.txt
+#
+# DO NOT install requirements.txt on Mac — it pulls in bitsandbytes and
+# CUDA-specific packages that fail to build on macOS.
+#
+# mflux is an MLX-native port of diffusers, optimised for Apple Silicon.
+# It bypasses all PyTorch MPS issues (no FP8, no bfloat16 edge cases, no bitsandbytes).
+# https://github.com/filipstrand/mflux
+
+mflux>=0.17.0
+
+# Image handling
+Pillow>=10.3.0
