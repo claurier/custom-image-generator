@@ -1,0 +1,51 @@
+{
+  "_comment": "SimpleTuner config for FLUX.2 [klein] LoRA — https://github.com/bghira/SimpleTuner",
+  "_usage": "Copy this to SimpleTuner's config/ directory and run: python train.py --config_path /path/to/this/config.json",
+
+  "model_type": "flux",
+  "pretrained_model_name_or_path": "black-forest-labs/FLUX.2-klein-base-9B",
+  "model_family": "flux2",
+
+  "output_dir": "/path/to/custom-image-generator/training/outputs/simpleTuner",
+  "logging_dir": "/path/to/custom-image-generator/training/outputs/simpleTuner/logs",
+
+  "data_backend_config": "/path/to/custom-image-generator/training/configs/simpleTuner/databackend.json",
+
+  "lora_rank": 32,
+  "lora_alpha": 16,
+  "lora_dropout": 0.0,
+  "lora_type": "standard",
+
+  "max_train_steps": 3000,
+  "train_batch_size": 1,
+  "gradient_accumulation_steps": 4,
+  "gradient_checkpointing": true,
+
+  "learning_rate": 1e-4,
+  "lr_scheduler": "constant",
+  "lr_warmup_steps": 0,
+
+  "mixed_precision": "bf16",
+  "quantize": true,
+  "base_model_precision": "int8",
+  "optimizer": "adamw_bf16",
+
+  "resolution": 1024,
+  "resolution_type": "pixel",
+  "aspect_bucket_rounding": 2,
+
+  "checkpointing_steps": 500,
+  "checkpoints_total_limit": 4,
+
+  "validation_prompt": "cmcstyle, a hero standing on a rooftop at night",
+  "validation_num_inference_steps": 50,
+  "validation_guidance": 4.0,
+  "validation_steps": 250,
+  "num_validation_images": 2,
+
+  "seed": 42,
+  "report_to": "tensorboard",
+
+  "offload_text_encoder": true,
+  "cache_dir": "/path/to/custom-image-generator/training/outputs/simpleTuner/cache"
+}

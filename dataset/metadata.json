@@ -1,0 +1,9 @@
+{
+  "trigger_token": "cmcstyle",
+  "base_model": "black-forest-labs/FLUX.2-klein-base-9B",
+  "style": "comic strip",
+  "resolution": 1024,
+  "total_images": 0,
+  "caption_format": "{trigger_token}, {content_description}",
+  "notes": "Do NOT describe the art style in captions. Describe content only. The LoRA learns style from images."
+}

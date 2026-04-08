@@ -1,0 +1,14 @@
+# Test prompts for cmcstyle comic strip LoRA
+# Lines starting with # are ignored
+# Format: {trigger_token}, {content description — NO style words}
+
+cmcstyle, a detective in a trench coat walking through a rainy alley at night
+cmcstyle, two astronauts floating in space, one pointing at Earth below
+cmcstyle, a young inventor working in a cluttered workshop surrounded by gadgets
+cmcstyle, a superhero leaping across rooftops at sunset
+cmcstyle, a villain in a long coat standing at the top of a skyscraper
+cmcstyle, a group of friends laughing around a campfire in the forest
+cmcstyle, a robot and a dog sitting together on a park bench
+cmcstyle, a scientist staring into a glowing portal in a dark laboratory
+cmcstyle, a car chase through a narrow city street at night
+cmcstyle, a close-up of a man's face showing surprise and shock

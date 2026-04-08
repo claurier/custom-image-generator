@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Model weights & large files
+*.safetensors
+*.ckpt
+*.pt
+*.bin
+*.gguf
+loras/*.safetensors
+training/outputs/
+
+# Dataset — raw images are local only
+dataset/raw/
+dataset/processed/
+
+# Secrets / env
+.env
+*.env
+secrets.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+wandb/
+runs/
+
+# Keep empty dirs
+!dataset/raw/.gitkeep
+!dataset/processed/.gitkeep
+!dataset/captions/.gitkeep
+!training/outputs/.gitkeep
+!loras/.gitkeep

@@ -1,0 +1,69 @@
+# ============================================================
+# ostris/ai-toolkit — FLUX.2 [klein] LoRA config
+# https://github.com/ostris/ai-toolkit
+#
+# Usage (from ai-toolkit repo root):
+#   python run.py /path/to/this/project/training/configs/ai-toolkit/config.yaml
+# ============================================================
+
+job: extension
+config:
+  name: flux2-klein-comic-lora
+  process:
+    - type: sd_trainer
+      training_folder: "/path/to/custom-image-generator/training/outputs"
+
+      device: cuda:0
+
+      network:
+        type: lora
+        linear: 32          # LoRA rank — increase to 64 if style underfits
+        linear_alpha: 16    # alpha = rank / 2
+
+      save:
+        dtype: float16
+        save_every: 500
+        max_step_saves_to_keep: 4
+
+      datasets:
+        - folder_path: "/path/to/custom-image-generator/dataset/processed"
+          caption_ext: txt
+          caption_folder: "/path/to/custom-image-generator/dataset/captions"
+          resolution: [1024, 1024]
+          # Aspect ratio bucketing — set to true for non-square images
+          random_crop: false
+          random_flip: false
+
+      train:
+        batch_size: 1
+        steps: 3000
+        gradient_accumulation_steps: 4
+        train_unet: true
+        train_text_encoder: false        # Do not train text encoder for style LoRA
+        gradient_checkpointing: true
+        noise_scheduler: "flowmatch"
+        optimizer: "adamw8bit"
+        lr: 9.5e-5
+        lr_scheduler: constant
+        dtype: bf16
+        quantize: true                   # int8 quantization — required on 24GB for 9B
+
+      model:
+        name_or_path: "black-forest-labs/FLUX.2-klein-base-9B"
+        is_flux: true
+        quantize: true
+
+      sample:
+        sampler: "euler"
+        sample_every: 250
+        width: 1024
+        height: 1024
+        prompts:
+          - "cmcstyle, a detective in a trench coat walking through a rainy alley"
+          - "cmcstyle, two astronauts floating in space, one pointing at Earth"
+          - "cmcstyle, a young inventor working in a cluttered workshop"
+        neg: ""
+        seed: 42
+        walk_seed: true
+        guidance_scale: 4.0
+        sample_steps: 50

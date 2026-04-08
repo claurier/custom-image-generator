@@ -1,0 +1,18 @@
+[
+  {
+    "id": "comic-dataset",
+    "type": "local",
+    "instance_data_dir": "/path/to/custom-image-generator/dataset/processed",
+    "caption_strategy": "textfile",
+    "caption_filter_list": [],
+    "resolution": 1024,
+    "minimum_image_size": 512,
+    "maximum_image_size": 2048,
+    "target_downsample_size": 1024,
+    "crop": true,
+    "crop_style": "center",
+    "crop_aspect": "square",
+    "random_flip": false,
+    "cache_dir": "/path/to/custom-image-generator/training/outputs/simpleTuner/cache/comic-dataset"
+  }
+]
