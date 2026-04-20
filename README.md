@@ -86,7 +86,7 @@ python train.py --config_path /path/to/training/configs/simpleTuner/config.json
 
 ### 6. Run inference
 
-**On RTX 4090 (Linux / Windows):**
+**On Linux / Windows:**
 ```bash
 # Single prompt
 python inference/generate.py \
